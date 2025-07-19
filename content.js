@@ -46,6 +46,33 @@ function showNotification(message, type = "success") {
 
 let isAutomationRunning = false;
 let automationTimeoutId = null;
+let progressDisplay = null;
+
+function createProgressDisplay() {
+  progressDisplay = document.createElement("div");
+  progressDisplay.id = "reve-art-progress-display";
+  progressDisplay.style.cssText = `
+    display: none;
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    z-index: 9998;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+  `;
+  document.body.appendChild(progressDisplay);
+}
+
+function updateProgressDisplay(text) {
+  if (progressDisplay) {
+    progressDisplay.textContent = text;
+    progressDisplay.style.display = text ? "block" : "none";
+  }
+}
 
 // Create floating button and modal for multiple prompts
 function createFloatingButtonAndModal() {
@@ -112,7 +139,7 @@ beautiful landscape with mountains and lakes" style="width: 100%; height: 150px;
 
   // Load saved prompts and delay
   promptTextarea.value = localStorage.getItem("reveArtPrompts") || "";
-  delayInput.value = localStorage.getItem("reveArtDelay") || 10;
+  delayInput.value = localStorage.getItem("reveArtDelay") || 45;
 
   // Save prompts and delay on change
   promptTextarea.addEventListener("input", () => {
@@ -130,6 +157,7 @@ beautiful landscape with mountains and lakes" style="width: 100%; height: 150px;
     if (isAutomationRunning) {
       clearTimeout(automationTimeoutId);
       isAutomationRunning = false;
+      updateProgressDisplay("");
       showNotification("Automação parada pelo usuário.", "error");
       modal.style.display = "none";
     }
@@ -148,11 +176,15 @@ beautiful landscape with mountains and lakes" style="width: 100%; height: 150px;
     for (let i = 0; i < prompts.length; i++) {
       if (!isAutomationRunning) break;
 
-      showNotification(`Executando prompt ${i + 1}/${prompts.length}: ${prompts[i]}`);
+      const progressText = `Executando prompt ${i + 1}/${prompts.length}: ${prompts[i]}`;
+      updateProgressDisplay(progressText);
+      showNotification(progressText);
       setPromptAndClick(prompts[i]);
       
       if (i < prompts.length - 1) {
-        showNotification(`Aguardando ${delay/1000} segundos para o próximo prompt...`);
+        const waitingText = `Aguardando ${delay/1000} segundos para o próximo prompt...`;
+        updateProgressDisplay(waitingText);
+        showNotification(waitingText);
         await new Promise(resolve => { automationTimeoutId = setTimeout(resolve, delay); });
       }
     }
@@ -160,6 +192,7 @@ beautiful landscape with mountains and lakes" style="width: 100%; height: 150px;
     if (isAutomationRunning) {
         showNotification("Automação concluída!");
     }
+    updateProgressDisplay("");
     isAutomationRunning = false;
   };
 
@@ -172,6 +205,7 @@ function showPromptModal() {
 function init() {
   injectScript(); // Injeta o script executor
   createFloatingButtonAndModal(); // Cria a UI
+  createProgressDisplay();
   console.log("Reve.art Prompt Automator (Controlador) carregado com sucesso!");
 }
 

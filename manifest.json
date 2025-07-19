@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Reve.art Prompt Automator",
-  "version": "4.4",
+  "version": "4.6",
   "description": "Automatiza a inserção de prompts e o clique no botão de gerar no Reve.art.",
   "permissions": ["activeTab", "scripting"],
   "host_permissions": ["https://preview.reve.art/*"],
