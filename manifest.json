@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Reve.art Prompt Automator",
+  "version": "4.4",
+  "description": "Automatiza a inserção de prompts e o clique no botão de gerar no Reve.art.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["https://preview.reve.art/*"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://preview.reve.art/app", "https://preview.reve.art/app/explore"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["page_script.js"],
+      "matches": ["https://preview.reve.art/*"]
+    }
+  ]
+}
