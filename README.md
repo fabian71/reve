@@ -4,9 +4,8 @@ Esta extensão para o Google Chrome e Microsoft Edge automatiza a inserção de 
 
 ## Como Instalar
 
-1.  **Baixe a extensão:** Faça o download do arquivo `reve6-prompt-automator.zip`.
-2.  **Descompacte o arquivo:** Extraia o conteúdo do arquivo `.zip` para uma pasta em seu computador.
-3.  **Abra as extensões do seu navegador:**
+1.  **Obtenha os arquivos da extensão:** Certifique-se de ter a pasta `reve6-prompt-automator` com todos os arquivos da extensão (`manifest.json`, `content.js`, etc.).
+2.  **Abra as extensões do seu navegador:**
     *   **Chrome:** Digite `chrome://extensions` na barra de endereço e pressione Enter.
     *   **Edge:** Digite `edge://extensions` na barra de endereço e pressione Enter.
 4.  **Ative o Modo de Desenvolvedor:** No canto superior direito da página de extensões, ative a opção "Modo de Desenvolvedor".
